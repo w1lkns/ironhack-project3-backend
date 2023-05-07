@@ -5,7 +5,7 @@ const MONGO_URI =
   process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/backend-project3";
 
 // Establish a connection to the MongoDB database
-mongoose.connect("mongodb://localhost:27017/backend-project3", {
+mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
