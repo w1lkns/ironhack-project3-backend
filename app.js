@@ -27,6 +27,9 @@ app.use("/api", userRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
+const chatperRoutes = require("./routes/chapter.routes");
+app.use("/api", chatperRoutes);
+
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 

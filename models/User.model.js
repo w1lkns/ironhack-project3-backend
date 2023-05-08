@@ -13,6 +13,10 @@ const userSchema = new Schema(
       lowercase: true,
       trim: true,
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
     hashedPassword: {
       type: String,
       required: [true, "Password is required."],
