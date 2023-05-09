@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Lecturer = require("../models/Lecturer.model");
+const Course = require("../models/Course.model");
 
 // Get all lecturers
 router.get("/lecturers", async (req, res) => {
@@ -13,17 +14,36 @@ router.get("/lecturers", async (req, res) => {
   }
 });
 
-// Get a single lecturer by ID
+// Get a specific lecturer with populated courses
 router.get("/lecturers/:id", async (req, res) => {
   try {
-    const lecturer = await Lecturer.findById(req.params.id);
+    let lecturer = await Lecturer.findById(req.params.id);
     if (!lecturer) {
       return res.status(404).json({ error: "Lecturer not found" });
     }
+
+    console.log("Course IDs:", lecturer.courses); // Log the course IDs
+
+    // Fetch courses directly using the course IDs
+    try {
+      for (let courseId of lecturer.courses) {
+        const course = await Course.findById(courseId);
+        console.log(course); // Log the fetched course document
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+
+    // Manually populate courses
+    const courses = await Course.find({ _id: { $in: lecturer.courses } });
+    lecturer = lecturer.toObject(); // Convert the lecturer document to a plain JavaScript object
+    lecturer.courses = courses; // Replace the course ids with the fetched course documents
+
     res.json(lecturer);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Server error" });
+    res
+      .status(500)
+      .json({ error: "An error occurred while retrieving the lecturer" });
   }
 });
 
