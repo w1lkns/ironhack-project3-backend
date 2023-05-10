@@ -31,6 +31,21 @@ router.get("/courses/:id", async (req, res) => {
   }
 });
 
+//Search for courses
+router.get("/courses/search", (req, res, next) => {
+  const { term } = req.query;
+
+  // Use a case-insensitive regular expression to match the search term anywhere in the course name
+  const regex = new RegExp(term, "i");
+
+  Course.find({ name: regex })
+    .then((courses) => res.json(courses))
+    .catch((error) => {
+      console.error(error);
+      next(error);
+    });
+});
+
 // Create a new course
 router.post("/courses", async (req, res) => {
   try {
