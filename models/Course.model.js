@@ -11,6 +11,10 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  featuredImage: {
+    type: String,
+    default: "url_to_your_default_image",
+  },
   description: {
     type: String,
     required: true,
