@@ -18,27 +18,25 @@ mongoose
 
 const lecturerSeed = async () => {
   try {
-    // Create 10 lecturers
     const lecturers = await Lecturer.create([
       {
-        name: "John Smith",
-        expertise: ["Web Development", "JavaScript"],
+        name: "Diogo Barros",
+        expertise: ["Web Development", "JavaScript", "Figma"],
         bio: "Experienced web developer with a passion for JavaScript",
-        email: "john@example.com",
+        email: "diogo@example.com",
       },
       {
-        name: "Alice Johnson",
-        expertise: ["Data Science", "Machine Learning"],
+        name: "Dani Johnson",
+        expertise: ["Data Science", "Machine Learning", "Spanish Food"],
         bio: "Data science enthusiast with expertise in machine learning",
-        email: "alice@example.com",
+        email: "dani@example.com",
       },
       {
-        name: "David Thompson",
-        expertise: ["UI/UX Design", "Prototyping"],
+        name: "Jaime Thompson",
+        expertise: ["UI/UX Design", "Prototyping", "Memes"],
         bio: "UI/UX designer specializing in interactive prototyping",
-        email: "david@example.com",
+        email: "jaime@example.com",
       },
-      // Add more lecturers...
     ]);
 
     console.log("Lecturers seeded successfully:", lecturers);

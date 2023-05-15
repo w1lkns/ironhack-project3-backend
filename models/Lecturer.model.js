@@ -7,7 +7,7 @@ const lecturerSchema = new mongoose.Schema({
   },
   profileImage: {
     type: String,
-    default: "/public/images/default-profile.png", 
+    default: "/images/default-profile.png", 
   },
   expertise: [
     {
