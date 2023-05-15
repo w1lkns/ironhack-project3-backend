@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Import
 const Course = require("../models/Course.model");
+const Lecturer = require("../models/Lecturer.model");
 
 // Get all courses
 router.get("/courses", async (req, res) => {
@@ -53,10 +54,21 @@ router.get("/search", async (req, res, next) => {
 // Create a new course
 router.post("/courses", async (req, res) => {
   try {
-    const course = await Course.create(req.body);
+    // Create the course
+    const course = new Course(req.body);
+    await course.save();
+
+    // Add the course to the lecturer's courses array
+    const lecturer = await Lecturer.findById(req.body.lecturer);
+    if (!lecturer) {
+      return res.status(404).json({ error: "Lecturer not found" });
+    }
+    lecturer.courses.push(course._id);
+    await lecturer.save();
+
     res.status(201).json(course);
   } catch (error) {
-    res.status(400).json({ error: "Failed to create the course" });
+    res.status(400).json({ error: "Error creating course" });
   }
 });
 

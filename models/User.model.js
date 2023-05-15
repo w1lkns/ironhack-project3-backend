@@ -23,7 +23,7 @@ const userSchema = new Schema(
     },
     profileImage: {
       type: String,
-      default: "/images/default-profile-image.png", // TODO upload a default profile image
+      default: "/images/default-profile.png", 
     },
     name: {
       type: String,
