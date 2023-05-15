@@ -5,9 +5,6 @@ require("dotenv").config();
 // ℹ️ Connects to the database
 require("./db");
 
-// Allow server to serve images from public folder
-app.use(express.static('public'));
-
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
 const express = require("express");
@@ -21,6 +18,9 @@ app.use((req, res, next) => {
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
+
+// Allow server to serve images from public folder
+app.use(express.static('public'));
 
 // 👇 Start handling routes here
 const courseRoutes = require("./routes/course.routes");
