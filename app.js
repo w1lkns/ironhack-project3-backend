@@ -6,13 +6,12 @@ require("dotenv").config();
 require("./db");
 
 // Handles http requests (express is node js framework)
-// https://www.npmjs.com/package/express
 const express = require("express");
 
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
-require("./config")(app);
+require("./config/index")(app);
 
 // 👇 Start handling routes here
 const courseRoutes = require("./routes/course.routes");
@@ -25,7 +24,10 @@ const userRoutes = require("./routes/user.routes");
 app.use("/api", userRoutes);
 
 const authRoutes = require("./routes/auth.routes");
-app.use("/auth", authRoutes);
+var cognitoAuth = require('./lib/cognitoAuth')
+const cognitoAuthMiddleware = cognitoAuth.getVerifyMiddleware()
+app.use("/users", cognitoAuthMiddleware, authRoutes);
+
 
 const chatperRoutes = require("./routes/chapter.routes");
 app.use("/api", chatperRoutes);
