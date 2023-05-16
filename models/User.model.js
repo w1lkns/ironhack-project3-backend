@@ -2,32 +2,21 @@ const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
+    userPoolId:{
+      type: String,
+      required: [true, "User pool id is required."],
+    },
     username: {
       type: String,
       required: [true, "Username is required."],
-    },
-    email: {
-      type: String,
-      required: [true, "Email is required."],
-      unique: true,
-      lowercase: true,
-      trim: true,
     },
     isAdmin: {
       type: Boolean,
       default: false,
     },
-    hashedPassword: {
-      type: String,
-      required: [true, "Password is required."],
-    },
     profileImage: {
       type: String,
       default: "/images/default-profile-image.png", // TODO upload a default profile image
-    },
-    name: {
-      type: String,
-      required: [true, "Name is required."],
     },
     courses: [
       {
