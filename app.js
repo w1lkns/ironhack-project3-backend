@@ -17,6 +17,10 @@ require("./config/index")(app);
 const courseRoutes = require("./routes/course.routes");
 app.use("/api", courseRoutes);
 
+const reviewRoutes = require("./routes/review.routes");
+console.log("Review routes imported:", reviewRoutes);
+app.use("/api", reviewRoutes);
+
 const lecturerRoutes = require("./routes/lecturer.routes");
 app.use("/api", lecturerRoutes);
 
@@ -24,10 +28,9 @@ const userRoutes = require("./routes/user.routes");
 app.use("/api", userRoutes);
 
 const authRoutes = require("./routes/auth.routes");
-var cognitoAuth = require('./lib/cognitoAuth')
-const cognitoAuthMiddleware = cognitoAuth.getVerifyMiddleware()
+var cognitoAuth = require("./lib/cognitoAuth");
+const cognitoAuthMiddleware = cognitoAuth.getVerifyMiddleware();
 app.use("/users", cognitoAuthMiddleware, authRoutes);
-
 
 const chatperRoutes = require("./routes/chapter.routes");
 app.use("/api", chatperRoutes);
