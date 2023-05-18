@@ -9,9 +9,14 @@ require("./db");
 const express = require("express");
 
 const app = express();
+app.use('/uploads', express.static('uploads'));
+
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config/index")(app);
+
+var cognitoAuth = require('./lib/cognitoAuth')
+const cognitoAuthMiddleware = cognitoAuth.getVerifyMiddleware()
 
 // 👇 Start handling routes here
 const courseRoutes = require("./routes/course.routes");
@@ -21,12 +26,10 @@ const lecturerRoutes = require("./routes/lecturer.routes");
 app.use("/api", lecturerRoutes);
 
 const userRoutes = require("./routes/user.routes");
-app.use("/api", userRoutes);
+app.use("/", cognitoAuthMiddleware, userRoutes);
 
 const authRoutes = require("./routes/auth.routes");
-var cognitoAuth = require('./lib/cognitoAuth')
-const cognitoAuthMiddleware = cognitoAuth.getVerifyMiddleware()
-app.use("/users", cognitoAuthMiddleware, authRoutes);
+app.use("/auth", cognitoAuthMiddleware, authRoutes);
 
 
 const chatperRoutes = require("./routes/chapter.routes");

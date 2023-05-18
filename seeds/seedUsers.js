@@ -8,7 +8,10 @@ const usersData = [
   {
     userPoolId: "a76bc41a-0cdc-4758-abfb-99520f6c21cd",
     username: "Lynne",
+    nickname: "Lynne",
     lastAccess: new Date(),
+    filename: "profilePic-1684433746933",
+    path:"uploads/profilePic-1684433746933"
   },
 ];
 

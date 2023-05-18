@@ -119,7 +119,7 @@ const User = require("../models/User.model");
 // });
 
 // GET  /auth/verify  -  Used to verify JWT stored on the client
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
   // If JWT token is valid the payload gets decoded by the
   // isAuthenticated middleware and is made available on `req.payload`
   // console.log(`req.payload`, req.payload);
@@ -128,11 +128,15 @@ router.get("/", (req, res, next) => {
   // res.status(200).json(req.payload);
 
   try{
-    const userCreated = User.findOne({ userPoolID: req.user.sub });
+    
+    // check if this user is added in mongoDB, otherwise create a new user
+    const userCreated = await User.findOne({ userPoolId: req.user.sub });
+    console.log(userCreated)
     if (!userCreated) {
       const newUser = User.create({ 
         userPoolId: req.user.sub,
         username: req.user.username,
+        nickname: req.user.username
        });
       console.log('new user created', newUser);
     } else{
@@ -142,10 +146,7 @@ router.get("/", (req, res, next) => {
     console.log(err)
   }
 
-  console.log('req.user', req.user);
   res.send('Successfully verified JWT token. Extracted information: ' + JSON.stringify(req.user))
-  // check if this user is added in mongoDB, otherwise create a new user
-
 
 });
 

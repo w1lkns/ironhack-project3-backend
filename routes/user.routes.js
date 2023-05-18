@@ -1,22 +1,36 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
-
-// GET all users
-router.get("/users", async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
+const multer = require("multer")
+// Set up multer for handling file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now());
   }
 });
 
-// GET user by ID
-router.get("/users/:id", async (req, res) => {
+const upload = multer({ storage: storage });
+
+
+// GET all users
+// router.get("/users", async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     res.json(users);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Server Error" });
+//   }
+// });
+
+// GET user by using userPoolId
+router.get("/user", async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const userPoolId = req.user.sub;
+    const user = await User.findOne({userPoolId:userPoolId});
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -62,6 +76,41 @@ router.delete("/users/:id", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     res.json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+router.post("/upload-image", upload.single('profilePic'), async (req, res) => {
+  try {
+    const userPoolId= req.user.sub;
+    console.log("userPoolId is ========>"+req.user.sub)
+   
+    const filename= req.file.filename;
+    const path= req.file.path;
+    console.log("filename is =======>" + filename)
+    console.log("path is ======>"+path)
+
+    if (!filename || !path ) {
+      return res.status(400).json({ message: "No imageName or imagePath provided" });
+    }
+    const updateImage = {
+      $set: {
+        filename: filename,
+        path: path
+      }
+    }
+    const user = await User.findOneAndUpdate(
+      {userPoolId:userPoolId},
+      updateImage,
+      { new: true }
+    );
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });

@@ -10,13 +10,19 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Username is required."],
     },
+    nickname: {
+      type: String,
+      required: [true, "Nickname is required."],
+    },
     isAdmin: {
       type: Boolean,
       default: false,
     },
-    profileImage: {
+    filename:{
       type: String,
-      default: "/images/default-profile-image.png", // TODO upload a default profile image
+    },
+    path:{
+      type: String,
     },
     courses: [
       {
