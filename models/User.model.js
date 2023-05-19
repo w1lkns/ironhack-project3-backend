@@ -20,9 +20,11 @@ const userSchema = new Schema(
     },
     filename:{
       type: String,
+      default:"profilePic-1684509679918"
     },
     path:{
       type: String,
+      default:"uploads/profilePic-1684509679918"
     },
     courses: [
       {

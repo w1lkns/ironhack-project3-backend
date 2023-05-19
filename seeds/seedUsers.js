@@ -10,8 +10,6 @@ const usersData = [
     username: "Lynne",
     nickname: "Lynne",
     lastAccess: new Date(),
-    filename: "profilePic-1684433746933",
-    path:"uploads/profilePic-1684433746933"
   },
 ];
 

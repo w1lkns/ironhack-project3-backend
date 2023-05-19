@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
 const multer = require("multer")
+const fs = require("fs")
+const path = require('path');
+
 // Set up multer for handling file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -86,31 +89,45 @@ router.get("/", async (req, res) => {
 router.post("/upload-image", upload.single('profilePic'), async (req, res) => {
   try {
     const userPoolId= req.user.sub;
-    console.log("userPoolId is ========>"+req.user.sub)
-   
     const filename= req.file.filename;
     const path= req.file.path;
-    console.log("filename is =======>" + filename)
-    console.log("path is ======>"+path)
 
     if (!filename || !path ) {
-      return res.status(400).json({ message: "No imageName or imagePath provided" });
+      return res.status(400).json({ message: "No imageName or Path provided" });
     }
+
+    // Fetch the user
+    const user = await User.findOne({userPoolId:userPoolId});
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+
+    // If user already has an image, delete it
+    if (user.filename && user.filename != "profilePic-1684509679918"){
+      fs.unlink(user.path,(err)=>{
+        if(err){
+          console.log(err)
+          return res.status(500).json({message: "Error deleting old image" })
+        }
+      })
+    }
+
+    // Update the user with new image info
     const updateImage = {
       $set: {
         filename: filename,
         path: path
       }
     }
-    const user = await User.findOneAndUpdate(
-      {userPoolId:userPoolId},
+
+    const updatedUser = await User.findOneAndUpdate(
+      { userPoolId: userPoolId },
       updateImage,
       { new: true }
     );
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.json(user);
+
+    res.json(updatedUser);
 
   } catch (error) {
     console.error(error);
