@@ -31,7 +31,6 @@ app.use("/user", cognitoAuthMiddleware, userRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", cognitoAuthMiddleware, authRoutes);
 
-
 const chatperRoutes = require("./routes/chapter.routes");
 app.use("/api", chatperRoutes);
 

@@ -117,7 +117,6 @@ const User = require("../models/User.model");
 //     })
 //     .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
 // });
-
 // GET  /auth/verify  -  Used to verify JWT stored on the client
 router.get("/", async (req, res, next) => {
   // If JWT token is valid the payload gets decoded by the
@@ -149,7 +148,6 @@ router.get("/", async (req, res, next) => {
   res.send('Successfully verified JWT token. Extracted information: ' + JSON.stringify(req.user))
 
 });
-
 
 
 module.exports = router;
