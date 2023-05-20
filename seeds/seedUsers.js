@@ -6,38 +6,9 @@ const MONGO_URI =
 
 const usersData = [
   {
-    username: "johnDoe",
-    email: "john.doe@example.com",
-    hashedPassword: "hashed_password_1", // Replace with the actual hashed password
-    name: "John Doe",
-    lastAccess: new Date(),
-  },
-  {
-    username: "janeSmith",
-    email: "jane.smith@example.com",
-    hashedPassword: "hashed_password_2", // Replace with the actual hashed password
-    name: "Jane Smith",
-    lastAccess: new Date(),
-  },
-  {
-    username: "alexJohnson",
-    email: "alex.johnson@example.com",
-    hashedPassword: "hashed_password_3", // Replace with the actual hashed password
-    name: "Alex Johnson",
-    lastAccess: new Date(),
-  },
-  {
-    username: "sarahWilson",
-    email: "sarah.wilson@example.com",
-    hashedPassword: "hashed_password_4", // Replace with the actual hashed password
-    name: "Sarah Wilson",
-    lastAccess: new Date(),
-  },
-  {
-    username: "michaelBrown",
-    email: "michael.brown@example.com",
-    hashedPassword: "hashed_password_5", // Replace with the actual hashed password
-    name: "Michael Brown",
+    userPoolId: "a76bc41a-0cdc-4758-abfb-99520f6c21cd",
+    username: "Lynne",
+    nickname: "Lynne",
     lastAccess: new Date(),
   },
 ];
