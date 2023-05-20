@@ -9,13 +9,12 @@ const chapterSchema = new mongoose.Schema({
     type: String,
     required: [true, "Chapter description is required."],
   },
-  link: {
+  youtubeId: {
     type: String,
-    required: [true, "Video link is required."],
+    required: [true, "YouTube ID is required."],
   },
   duration: {
     type: Number,
-    required: [true, "Chapter duration is required."],
   },
   course: {
     type: mongoose.Schema.Types.ObjectId,
