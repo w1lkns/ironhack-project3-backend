@@ -34,7 +34,6 @@ router.get("/chapters/:id", async (req, res) => {
 });
 
 // Create a new chapter
-// Create a new chapter
 router.post("/chapters", async (req, res) => {
   try {
     const youtubeId = extractYouTubeId(req.body.link); // function to get YouTube ID from link
