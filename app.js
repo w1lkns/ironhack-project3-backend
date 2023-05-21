@@ -22,7 +22,7 @@ const courseRoutes = require("./routes/course.routes");
 app.use("/api", courseRoutes);
 
 const reviewRoutes = require("./routes/review.routes");
-console.log("Review routes imported:", reviewRoutes);
+//console.log("Review routes imported:", reviewRoutes);
 app.use("/api", reviewRoutes);
 
 const lecturerRoutes = require("./routes/lecturer.routes");

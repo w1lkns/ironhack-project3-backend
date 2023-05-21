@@ -30,7 +30,7 @@ router.post("/reviews", async (req, res) => {
 });
 
 // GET all reviews for a specific course
-router.get("/reviews/course/:courseId", async (req, res) => {
+router.get("/reviews/courses/:courseId", async (req, res) => {
   try {
     const { courseId } = req.params;
     const reviews = await Review.find({ course: courseId });
