@@ -15,7 +15,12 @@ router.get("/reviews", async (req, res) => {
 // POST a new review
 router.post("/reviews", async (req, res) => {
   try {
-    const { user, course, rating, comment } = req.body;
+    const userPoolId = req.user.sub;
+    const user = await User.findOne({ userPoolId: userPoolId });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const { course, rating, comment } = req.body;
     const newReview = await Review.create({
       user,
       course,
