@@ -9,7 +9,6 @@ mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Connected to the database successfully");
-    // Call the function to seed lecturers
     lecturerSeed();
   })
   .catch((error) => {
@@ -18,7 +17,6 @@ mongoose
 
 const lecturerSeed = async () => {
   try {
-    // Create 10 lecturers
     const lecturers = await Lecturer.create([
       {
         name: "Diogo Barros",

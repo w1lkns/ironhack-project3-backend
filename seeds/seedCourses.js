@@ -28,14 +28,14 @@ const courseSeed = async () => {
         name: "Web Development 101",
         description: "An introductory course on web development",
         price: 49.99,
-        lecturer: lecturers[0]._id,
+        lecturer: lecturers[1]._id,
         chapters: [],
       },
       {
         name: "Data Science Fundamentals",
         description: "A comprehensive course covering data science concepts",
         price: 79.99,
-        lecturer: lecturers[1]._id,
+        lecturer: lecturers[0]._id,
         chapters: [],
       },
       {
@@ -45,7 +45,6 @@ const courseSeed = async () => {
         lecturer: lecturers[2]._id,
         chapters: [],
       },
-      // Add more courses...
     ]);
 
     // Update the lecturers with their respective courses
