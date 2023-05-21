@@ -29,4 +29,15 @@ router.post("/reviews", async (req, res) => {
   }
 });
 
+// GET all reviews for a specific course
+router.get("/reviews/course/:courseId", async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const reviews = await Review.find({ course: courseId });
+    res.status(200).json(reviews);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
