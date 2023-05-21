@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Lecturer = require("../models/Lecturer.model");
+require("dotenv").config();
 
 const MONGO_URI =
   process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/backend-project3";
@@ -41,8 +42,6 @@ const lecturerSeed = async () => {
         profileImage: "https://ca.slack-edge.com/T04C6NT0JJD-U04BDHHLW23-8bf1c0b5027c-192"
       },
     ]);
-
-    console.log("Lecturers seeded successfully:", lecturers);
 
     // Disconnect from the database after seeding
     mongoose.disconnect();

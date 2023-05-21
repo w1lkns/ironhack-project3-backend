@@ -1,5 +1,6 @@
 const Course = require("../models/Course.model"); // Import the Course model
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const MONGO_URI =
   process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/backend-project3";
