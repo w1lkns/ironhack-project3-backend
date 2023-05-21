@@ -19,14 +19,14 @@ const cognitoAuthMiddleware = cognitoAuth.getVerifyMiddleware();
 
 // 👇 Start handling routes here
 const courseRoutes = require("./routes/course.routes");
-app.use("/api", courseRoutes);
+app.use("/api", cognitoAuthMiddleware, courseRoutes);
 
 const reviewRoutes = require("./routes/review.routes");
 //console.log("Review routes imported:", reviewRoutes);
 app.use("/api", cognitoAuthMiddleware, reviewRoutes);
 
 const lecturerRoutes = require("./routes/lecturer.routes");
-app.use("/api", lecturerRoutes);
+app.use("/api", cognitoAuthMiddleware, lecturerRoutes);
 
 const userRoutes = require("./routes/user.routes");
 app.use("/user", cognitoAuthMiddleware, userRoutes);
@@ -36,10 +36,10 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", cognitoAuthMiddleware, authRoutes);
 
 const chatperRoutes = require("./routes/chapter.routes");
-app.use("/api", chatperRoutes);
+app.use("/api", cognitoAuthMiddleware, chatperRoutes);
 
 const indexRoutes = require("./routes/index.routes");
-app.use("/api", indexRoutes);
+app.use("/api", cognitoAuthMiddleware, indexRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
