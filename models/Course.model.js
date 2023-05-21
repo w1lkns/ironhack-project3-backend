@@ -7,6 +7,10 @@ const courseSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  courseImage: {
+    type: String,
+    default: "images/course-default-image.webp",
+  },
   name: {
     type: String,
     required: true,

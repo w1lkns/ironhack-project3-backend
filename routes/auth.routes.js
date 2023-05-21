@@ -126,28 +126,28 @@ router.get("/", async (req, res, next) => {
   // // Send back the token payload object containing the user data
   // res.status(200).json(req.payload);
 
-  try{
-    
+  try {
     // check if this user is added in mongoDB, otherwise create a new user
     const userCreated = await User.findOne({ userPoolId: req.user.sub });
-    console.log(userCreated)
+    console.log(userCreated);
     if (!userCreated) {
-      const newUser = User.create({ 
+      const newUser = User.create({
         userPoolId: req.user.sub,
         username: req.user.username,
-        nickname: req.user.username
-       });
-      console.log('new user created', newUser);
-    } else{
-      console.log('user already exists');
+        nickname: req.user.username,
+      });
+      console.log("new user created", newUser);
+    } else {
+      console.log("user already exists");
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 
-  res.send('Successfully verified JWT token. Extracted information: ' + JSON.stringify(req.user))
-
+  res.send(
+    "Successfully verified JWT token. Extracted information: " +
+      JSON.stringify(req.user)
+  );
 });
-
 
 module.exports = router;
