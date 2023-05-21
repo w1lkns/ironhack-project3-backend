@@ -13,10 +13,11 @@ router.get("/lecturers", async (req, res) => {
   }
 });
 
-// Get a single lecturer by ID
-router.get("/lecturers/:id", async (req, res) => {
+// Get a single lecturer
+router.get("/", async (req, res) => {
   try {
-    const lecturer = await Lecturer.findById(req.params.id);
+    const currentUser = req.user.username;
+    const lecturer = await Lecturer.findOne({ name: currentUser}).populate("courses");
     if (!lecturer) {
       return res.status(404).json({ error: "Lecturer not found" });
     }
