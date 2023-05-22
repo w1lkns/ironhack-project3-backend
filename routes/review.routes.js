@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Review = require("../models/Review.model");
 const User = require("../models/User.model");
+const Course = require("../models/Course.model");
 
 // GET review
 router.get("/reviews", async (req, res) => {
@@ -14,11 +15,10 @@ router.get("/reviews", async (req, res) => {
 });
 
 // POST a new review
-// POST a new review
 router.post("/reviews", async (req, res) => {
   try {
-    const username = req.body.user;
-    const user = await User.findOne({ userName: username });
+    const userPoolId = req.user.sub;
+    const user = await User.findOne({ userPoolId: userPoolId });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
