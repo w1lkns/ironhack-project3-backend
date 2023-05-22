@@ -5,6 +5,7 @@ const axios = require("axios");
 // Import Chapter model
 const Chapter = require("../models/Chapter.model");
 const Course = require("../models/Course.model");
+const User = require("../models/User.model");
 
 // Get all chapters
 router.get("/chapters", async (req, res) => {
@@ -117,5 +118,55 @@ router.delete("/chapters/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete the chapter" });
   }
 });
+
+// Mark chapter as watched or unwatched
+
+router.put(
+  "/:courseId/chapters/watchChapter/:chapterId",
+  async (req, res) => {
+    try {
+      const userPoolId = req.user.sub;
+      const { courseId, chapterId } = req.params;
+
+      const user = await User.findOne({ userPoolId: userPoolId });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // find the course in user's courses
+      const userCourse =
+        user.courses &&
+        user.courses.find(
+          (course) => course && course.course && course.course.equals(courseId)
+        );
+      if (!userCourse) {
+        return res.status(404).json({ message: "Course not found" });
+      }
+
+      // find the chapter in user's course
+      const userChapter =
+        userCourse &&
+        userCourse.chapters &&
+        userCourse.chapters.find(
+          (chapter) =>
+            chapter && chapter.chapter && chapter.chapter.equals(chapterId)
+        );
+
+      if (!userChapter) {
+        return res.status(404).json({ message: "Chapter not found" });
+      }
+
+      // update the watched status
+      userChapter.watched = !userChapter.watched;
+
+      await user.save();
+
+      res.json({ message: "Watched status updated successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server Error", error: error.message });
+    }
+  }
+);
 
 module.exports = router;
