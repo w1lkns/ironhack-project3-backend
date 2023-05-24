@@ -172,4 +172,30 @@ router.post("/wishlist", async (req, res) => {
   }
 });
 
+// remove course from user wishlist
+router.delete("/wishlist", async (req, res) => {
+  const userPoolId = req.user.sub;
+  const { courseId } = req.body;
+
+  try {
+    const user = await User.findOne({ userPoolId: userPoolId });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const index = user.wishlist.indexOf(courseId);
+    if (index === -1) {
+      return res.status(400).json({ error: "Course not in wishlist" });
+    }
+
+    user.wishlist.splice(index, 1);
+    await user.save();
+
+    res.json({ message: "Course removed from wishlist" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Could not remove course from wishlist" });
+  }
+});
+
 module.exports = router;

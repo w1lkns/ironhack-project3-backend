@@ -132,12 +132,12 @@ router.put(
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-
+     
       // find the course in user's courses
       const userCourse =
         user.courses &&
         user.courses.find(
-          (course) => course && course.course && course.course.equals(courseId)
+          (course) => course.course && course.course == courseId
         );
       if (!userCourse) {
         return res.status(404).json({ message: "Course not found" });
