@@ -4,10 +4,10 @@ const router = express.Router();
 // Import
 const Course = require("../models/Course.model");
 const Chapter = require("../models/Chapter.model");
+const User = require("../models/User.model");
 
 // Set Stripes
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
 
 // Get all courses
 router.get("/courses", async (req, res) => {
@@ -113,20 +113,19 @@ router.get("/search", async (req, res, next) => {
     });
   }
 });
-
+/*
 // Buy the course by using Stripes API
-router.post("/checkout",async(req, res) => {
+router.post("/checkout", async (req, res) => {
   try {
     const { courseId } = req.body;
     const course = await Course.findById(courseId);
     console.log(course);
-    console.log(process.env.STRIPE_SECRET_KEY)
+    console.log(process.env.STRIPE_SECRET_KEY);
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
-    
-    const session = await stripe.checkout.sessions.create({
 
+    const session = await stripe.checkout.sessions.create({
       line_items: [
         {
           // name: course.name,
@@ -136,7 +135,7 @@ router.post("/checkout",async(req, res) => {
           // quantity: 1,
           quantity: 1,
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             unit_amount: Math.floor(course.price * 100),
             product_data: {
               name: course.name,
@@ -150,14 +149,65 @@ router.post("/checkout",async(req, res) => {
       cancel_url: `http://localhost:3000/courses/${courseId}?canceled=true`,
     });
 
-    res.json({url: session.url}) 
-
-
+    res.json({ url: session.url });
   } catch (error) {
     res.status(500).json({ error: "Failed to checkout" });
   }
-})
+}); */
 
+router.post("/checkout", async (req, res) => {
+  try {
+    const { courseId } = req.body;
+    const course = await Course.findById(courseId);
 
+    if (!course) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    const userPoolId = req.user.sub; // Getting userPoolId from the request
+    const user = await User.findOne({ userPoolId: userPoolId });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Add the course and chapters to the user's courses list
+    const newCourse = {
+      course: course._id,
+      chapters: course.chapters.map((chapterId) => ({
+        chapter: chapterId,
+        watched: false,
+      })),
+    };
+
+    user.courses.push(newCourse);
+    console.log("course added: ", newCourse);
+    await user.save();
+
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          quantity: 1,
+          price_data: {
+            currency: "usd",
+            unit_amount: Math.floor(course.price * 100),
+            product_data: {
+              name: course.name,
+              description: course.description,
+            },
+          },
+        },
+      ],
+      mode: "payment",
+      success_url: `http://localhost:3000/courses/${courseId}?success=true`,
+      cancel_url: `http://localhost:3000/courses/${courseId}?canceled=true`,
+    });
+
+    res.json({ url: session.url });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to checkout" });
+  }
+});
 
 module.exports = router;
