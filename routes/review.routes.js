@@ -40,7 +40,14 @@ router.post("/reviews", async (req, res) => {
 router.get("/reviews/courses/:courseId", async (req, res) => {
   try {
     const { courseId } = req.params;
-    const reviews = await Review.find({ course: courseId }).populate("user");
+    const { userId } = req.query;
+
+    let query = { course: courseId };
+    if (userId) {
+      query = { ...query, user: userId };
+    }
+
+    const reviews = await Review.find(query).populate("user");
     console.log(reviews);
     res.status(200).json(reviews);
   } catch (error) {
