@@ -122,7 +122,7 @@ router.get("/wishlist-courses", async (req, res) => {
   try {
     const userPoolId = req.user.sub;
     const user = await User.findOne({ userPoolId: userPoolId }).populate({
-      path: "wishlist.course",
+      path: "wishlist",
       populate: {
         path: "lecturer",
       },
