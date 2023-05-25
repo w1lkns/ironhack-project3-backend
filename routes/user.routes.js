@@ -17,17 +17,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// GET all users
-// router.get("/users", async (req, res) => {
-//   try {
-//     const users = await User.find();
-//     res.json(users);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// });
-
 // GET user by using userPoolId
 router.get("/", async (req, res) => {
   try {

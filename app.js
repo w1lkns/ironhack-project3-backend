@@ -26,7 +26,7 @@ const reviewRoutes = require("./routes/review.routes");
 app.use("/api", cognitoAuthMiddleware, reviewRoutes);
 
 const lecturerRoutes = require("./routes/lecturer.routes");
-app.use("/api", cognitoAuthMiddleware, lecturerRoutes);
+app.use("/lecturer", cognitoAuthMiddleware, lecturerRoutes);
 
 const userRoutes = require("./routes/user.routes");
 app.use("/user", cognitoAuthMiddleware, userRoutes);
