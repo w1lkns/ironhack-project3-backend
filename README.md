@@ -5,6 +5,31 @@
 
 Brainbounce is an online learning platform that democratizes education by making it accessible to everyone, everywhere, much like Udemy. It offers a wide variety of courses across diverse fields such as technology, business, arts, language, and personal development. Designed for self-paced learning, Brainbounce hosts expert-led courses that range from beginner to advanced levels. With Brainbounce, you can learn at your own rhythm, track your progress, and engage with instructors and peers. Whether you're seeking professional development or personal enrichment, Brainbounce provides the tools and resources you need to achieve your learning goals. 
 
+## Getting Started
+Clone the repository to your local machine and run npm install to install all the dependencies mentioned in the package.json file.
+
+```bash
+git clone https://github.com/w1lkns/ironhack-project3-backend.git
+cd ironhack-project3-backend
+npm install
+```
+
+## Running the Application
+Use the following commands to run the application:
+
+To start the application:
+```bash
+npm start
+```
+To build the application:
+```bash
+npm run build
+```
+To test the application:
+```bash
+npm run test
+```
+
 ## MVP (DOM)
 
 - User authentication and authorization
@@ -81,8 +106,22 @@ Backend Deployment: [https://adorable-bear-coat.cyclic.app](https://adorable-bea
 
 ### Slides
 URls for the project presentation (slides)
+https://docs.google.com/presentation/d/1XV2WaztX_9gsycxm_wHe87VRQRBks2DWD_q77r7Mun4/edit#slide=id.g24b3049221b_0_10
 
 
+### Main Dependencies: 
+- Express.js: The server for handling and routing HTTP requests
+- Mongoose: A MongoDB object modeling tool designed to work in an asynchronous environment.
+- JSON Web Tokens (jsonwebtoken & express-jwt): An open, industry standard RFC 7519 method for representing claims securely between two parties.
+- Axios: Promise-based HTTP client for the browser and node.js.
+- Stripe: A set of tools for building and running an internet business. It helps with handling payments and managing businesses online.
+- Multer: A node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
+- Morgan: HTTP request logger middleware for Node.js.
+- Cookie-parser: Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
 
-### Library resource: 
 
+### Contact: 
+
+If you have any questions, feel free to open an issue in this repository.
+
+Enjoy using Brainbounce!
