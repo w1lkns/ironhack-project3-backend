@@ -106,6 +106,7 @@ Backend Deployment: [https://adorable-bear-coat.cyclic.app](https://adorable-bea
 
 ### Slides
 URls for the project presentation (slides)
+https://docs.google.com/presentation/d/1XV2WaztX_9gsycxm_wHe87VRQRBks2DWD_q77r7Mun4/edit#slide=id.g24b3049221b_0_10
 
 
 ### Main Dependencies: 
