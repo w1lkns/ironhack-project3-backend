@@ -210,4 +210,33 @@ router.post("/checkout", async (req, res) => {
   }
 });
 
+router.post("/courses", async (req, res) => {
+  try {
+    // get the current user
+    const currentUser = req.user.username;
+    const lecturer = await Lecturer.findOne({ name: currentUser });
+
+    if (!lecturer) {
+      return res.status(404).json({ error: "Lecturer not found" });
+    }
+
+    // create a new course and assign the lecturer to it
+    const course = new Course({
+      ...req.body,
+      lecturer: lecturer._id,
+    });
+    const savedCourse = await course.save();
+
+    // also add this course to the lecturer's list of courses
+    lecturer.courses.push(savedCourse._id);
+    await lecturer.save();
+
+    res.status(201).json(savedCourse);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
 module.exports = router;

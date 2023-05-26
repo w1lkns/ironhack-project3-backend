@@ -2,11 +2,15 @@ const express = require("express");
 const router = express.Router();
 const Lecturer = require("../models/Lecturer.model");
 
-// Get all lecturers
-router.get("/lecturers", async (req, res) => {
+router.get("/lecturer/:username", async (req, res) => {
   try {
-    const lecturers = await Lecturer.find();
-    res.json(lecturers);
+    const currentUser = req.params.username;
+    console.log(currentUser);
+    const lecturer = await Lecturer.findOne({ name: currentUser });
+    if (!lecturer) {
+      return res.status(404).json({ error: "Lecturer not found" });
+    }
+    res.json(lecturer);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Server error" });
@@ -17,7 +21,9 @@ router.get("/lecturers", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const currentUser = req.user.username;
-    const lecturer = await Lecturer.findOne({ name: currentUser}).populate("courses");
+    const lecturer = await Lecturer.findOne({ name: currentUser }).populate(
+      "courses"
+    );
     if (!lecturer) {
       return res.status(404).json({ error: "Lecturer not found" });
     }
