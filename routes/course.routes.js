@@ -114,47 +114,6 @@ router.get("/search", async (req, res, next) => {
     });
   }
 });
-/*
-// Buy the course by using Stripes API
-router.post("/checkout", async (req, res) => {
-  try {
-    const { courseId } = req.body;
-    const course = await Course.findById(courseId);
-    console.log(course);
-    console.log(process.env.STRIPE_SECRET_KEY);
-    if (!course) {
-      return res.status(404).json({ error: "Course not found" });
-    }
-
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          // name: course.name,
-          // description: course.description,
-          // price:  Math.floor(course.price),
-          // currency: "usd",
-          // quantity: 1,
-          quantity: 1,
-          price_data: {
-            currency: "usd",
-            unit_amount: Math.floor(course.price * 100),
-            product_data: {
-              name: course.name,
-              description: course.description,
-            },
-          },
-        },
-      ],
-      mode: "payment",
-      success_url: `${appConfig.signoutUri}/courses/${courseId}?success=true`,
-      cancel_url: `${appConfig.signoutUri}/courses/${courseId}?canceled=true`,
-    });
-
-    res.json({ url: session.url });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to checkout" });
-  }
-}); */
 
 router.post("/checkout", async (req, res) => {
   try {
@@ -200,8 +159,8 @@ router.post("/checkout", async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:3000/courses/${courseId}?success=true`,
-      cancel_url: `http://localhost:3000/courses/${courseId}?canceled=true`,
+      success_url: `https://main--harmonious-starburst-2c594b.netlify.app/courses/${courseId}?success=true`,
+      cancel_url: `https://main--harmonious-starburst-2c594b.netlify.app/courses/${courseId}?canceled=true`,
     });
 
     res.json({ url: session.url });
