@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const appConfig = require('./app-config.json');
+
 
 // Import
 const Course = require("../models/Course.model");
@@ -145,8 +147,8 @@ router.post("/checkout", async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:3000/courses/${courseId}?success=true`,
-      cancel_url: `http://localhost:3000/courses/${courseId}?canceled=true`,
+      success_url: `${appConfig.signoutUri}/courses/${courseId}?success=true`,
+      cancel_url: `${appConfig.signoutUri}/courses/${courseId}?canceled=true`,
     });
 
     res.json({ url: session.url });
