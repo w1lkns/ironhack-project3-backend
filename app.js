@@ -1,3 +1,13 @@
+const cors = require("cors");
+
+// Configure CORS options
+const corsOptions = {
+  origin: "https://main--harmonious-starburst-2c594b.netlify.app",
+};
+
+// Apply CORS middleware globally
+app.use(cors(corsOptions));
+
 // ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
 require("dotenv").config();
