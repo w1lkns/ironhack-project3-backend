@@ -159,6 +159,15 @@ router.put(
       // update the watched status
       userChapter.watched = !userChapter.watched;
 
+      // update the progress number of registered course
+      const watchedChapters = userCourse.chapters.filter(
+        (chapter) => chapter.watched
+      ).length;
+
+
+      // get chapter number of the course
+      userCourse.progress = (watchedChapters /userCourse.chapters.length * 100)
+
       await user.save();
 
       res.json({ message: "Watched status updated successfully" });
