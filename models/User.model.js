@@ -32,6 +32,12 @@ const userSchema = new Schema(
           type: Schema.Types.ObjectId,
           ref: "Course",
         },
+        progress: {
+          type: Number,
+          default: 0,
+          min: 0,
+          max: 100,
+        },
         chapters: [
           {
             chapter: {
@@ -41,6 +47,12 @@ const userSchema = new Schema(
             watched: {
               type: Boolean,
               default: false,
+            },
+            progress: {
+              type: Number,
+              default: 0,
+              min: 0,
+              max: 100,
             },
           },
         ],
