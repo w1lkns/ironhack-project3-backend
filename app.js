@@ -2,7 +2,7 @@ const cors = require("cors");
 
 // Configure CORS options
 const corsOptions = {
-  origin: "https://main--harmonious-starburst-2c594b.netlify.app",
+  origin: "*",
 };
 
 // ℹ️ Gets access to environment variables/settings
