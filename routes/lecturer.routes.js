@@ -20,10 +20,10 @@ router.get("/lecturer/:username", async (req, res) => {
 // Get a single lecturer
 router.get("/", async (req, res) => {
   try {
-    const currentUser = req.user.username;
-    const lecturer = await Lecturer.findOne({ name: currentUser }).populate(
-      "courses"
-    );
+    const userPoolId = req.user.sub;
+    const lecturer = await Lecturer.findOne({
+      userPoolId: userPoolId,
+    }).populate("courses");
     if (!lecturer) {
       return res.status(404).json({ error: "Lecturer not found" });
     }
