@@ -149,7 +149,7 @@ router.post("/checkout", async (req, res) => {
         {
           quantity: 1,
           price_data: {
-            currency: "usd",
+            currency: "eur",
             unit_amount: Math.floor(course.price * 100),
             product_data: {
               name: course.name,
