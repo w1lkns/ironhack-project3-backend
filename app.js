@@ -5,9 +5,6 @@ const corsOptions = {
   origin: "https://main--harmonious-starburst-2c594b.netlify.app",
 };
 
-// Apply CORS middleware globally
-app.use(cors(corsOptions));
-
 // ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
 require("dotenv").config();
@@ -18,7 +15,10 @@ require("./db");
 // Handles http requests (express is node js framework)
 const express = require("express");
 
+// Apply CORS middleware globally
 const app = express();
+app.use(cors(corsOptions));
+
 app.use("/uploads", express.static("uploads"));
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
