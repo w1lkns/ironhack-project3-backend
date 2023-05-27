@@ -40,6 +40,8 @@ router.post("/upload-image", upload.single("profilePic"), async (req, res) => {
     const filename = req.file.filename;
     const path = req.file.path;
 
+    console.log('this is a console.log from the upload-image route')
+
     if (!filename || !path) {
       return res.status(400).json({ message: "No imageName or Path provided" });
     }
