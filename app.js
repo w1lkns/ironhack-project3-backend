@@ -22,6 +22,8 @@ const app = express();
 app.use(
   cors({
     origin: "*",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   })
 );
 
