@@ -18,7 +18,7 @@ router.get("/lecturer/:username", async (req, res) => {
 });
 
 // Get a single lecturer
-router.get("/", async (req, res) => {
+router.get("/lecturer", async (req, res) => {
   try {
     const userPoolId = req.user.sub;
     const lecturer = await Lecturer.findOne({
