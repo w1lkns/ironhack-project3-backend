@@ -35,6 +35,7 @@ router.get("/", async (req, res) => {
 // upload a userprofile picture
 router.post("/upload-image", upload.single("profilePic"), async (req, res) => {
   try {
+    res.setHeader('Access-Control-Allow-Origin', 'https://main--harmonious-starburst-2c594b.netlify.app');
     const userPoolId = req.user.sub;
     const filename = req.file.filename;
     const path = req.file.path;
