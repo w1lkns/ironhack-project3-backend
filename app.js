@@ -19,7 +19,7 @@ const express = require("express");
 const app = express();
 app.use(cors(corsOptions));
 
-app.use('/uploads', cors(corsOptions), express.static('uploads'));
+app.use("/uploads", cors(corsOptions), express.static("uploads"));
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config/index")(app);
@@ -29,26 +29,26 @@ const cognitoAuthMiddleware = cognitoAuth.getVerifyMiddleware();
 
 // 👇 Start handling routes here
 const courseRoutes = require("./routes/course.routes");
-app.use("/api", cognitoAuthMiddleware, courseRoutes);
+app.use("/api", cognitoAuthMiddleware, cors(corsOptions), courseRoutes);
 
 const reviewRoutes = require("./routes/review.routes");
 //console.log("Review routes imported:", reviewRoutes);
-app.use("/api", cognitoAuthMiddleware, reviewRoutes);
+app.use("/api", cognitoAuthMiddleware, cors(corsOptions), reviewRoutes);
 
 const lecturerRoutes = require("./routes/lecturer.routes");
-app.use("/api", cognitoAuthMiddleware, lecturerRoutes);
+app.use("/api", cognitoAuthMiddleware, cors(corsOptions), lecturerRoutes);
 
 const userRoutes = require("./routes/user.routes");
-app.use("/user", cognitoAuthMiddleware, userRoutes);
+app.use("/user", cognitoAuthMiddleware, cors(corsOptions), userRoutes);
 
 const authRoutes = require("./routes/auth.routes");
-app.use("/auth", cognitoAuthMiddleware, authRoutes);
+app.use("/auth", cognitoAuthMiddleware, cors(corsOptions), authRoutes);
 
 const chatperRoutes = require("./routes/chapter.routes");
-app.use("/api", cognitoAuthMiddleware, chatperRoutes);
+app.use("/api", cognitoAuthMiddleware, cors(corsOptions), chatperRoutes);
 
 const indexRoutes = require("./routes/index.routes");
-app.use("/api", cognitoAuthMiddleware, indexRoutes);
+app.use("/api", cognitoAuthMiddleware, cors(corsOptions), indexRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
