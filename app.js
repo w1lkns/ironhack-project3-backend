@@ -19,7 +19,7 @@ const express = require("express");
 const app = express();
 app.use(cors(corsOptions));
 
-app.use("/uploads", express.static("uploads"));
+app.use('/uploads', cors(corsOptions), express.static('uploads'));
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config/index")(app);
