@@ -24,7 +24,7 @@ const userSchema = new Schema(
     },
     path:{
       type: String,
-      default:"uploads/profilePic-1684509679918"
+      default:"tmp/profilePic-1684509679918"
     },
     courses: [
       {
